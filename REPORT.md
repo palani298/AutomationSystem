@@ -75,7 +75,7 @@ Composition (search-by-name → pick a row → fetch details) is the calling age
 - No real cobrowse tools (draw, multi-operator lock). The handoff *mechanism* is real; the chrome is minimal.
 - No desktop adapter implementation — schema + REPORT only, per §3.7.
 - No tenant registry, canary scheduler, or override editor. `tenant_overrides` is the stub.
-- No Temporal Cloud / k8s / queues. Narrating them would be the scaling-infrastructure the brief told us not to build.
+- No Temporal Cloud / k8s / queues. A `Dockerfile` + Compose file only packages the same three host processes (Temporal, API, UI) so an API/Playwright unit could be replicated. That is not a multi-tenant cluster.
 - Local-model computer-use on DGX Spark was not used. One frontier-API discovery run is the intended evidence.
 - Code generation of page objects was skipped; the artifact *is* the reusable program.
 

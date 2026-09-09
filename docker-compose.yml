@@ -1,0 +1,68 @@
+# Optional packaging — not the interview demo path (that is DEMO.md).
+# Same three processes you start by hand: Temporal, API, admin UI.
+# Scale replay workers later with: docker compose up --scale api=2
+# (headed operator handoff stays on the host; containers run headless.)
+
+services:
+  postgresql:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: temporal
+      POSTGRES_PASSWORD: temporal
+      POSTGRES_DB: temporal
+    volumes:
+      - temporal-pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U temporal"]
+      interval: 5s
+      retries: 10
+
+  temporal:
+    image: temporalio/auto-setup:1.27.2
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    ports:
+      - "7233:7233"
+    environment:
+      - DB=postgres12
+      - DB_PORT=5432
+      - POSTGRES_USER=temporal
+      - POSTGRES_PWD=temporal
+      - POSTGRES_SEEDS=postgresql
+
+  api:
+    build: .
+    ports:
+      - "8787:8787"
+    env_file:
+      - .env
+    environment:
+      APP_HOST: "0.0.0.0"
+      PLAYWRIGHT_HEADLESS: "true"
+      TEMPORAL_ADDRESS: temporal:7233
+      PUBLIC_BASE_URL: http://127.0.0.1:8787
+      ALLOWLIST_HOSTS: 127.0.0.1,localhost
+    volumes:
+      - ./data:/app/data
+      - ./evidence:/app/evidence
+    depends_on:
+      - temporal
+
+  ui:
+    image: node:22-alpine
+    working_dir: /ui
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 5173"
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_PROXY: http://api:8787
+    volumes:
+      - ./frontend:/ui
+      - ui-modules:/ui/node_modules
+    depends_on:
+      - api
+
+volumes:
+  temporal-pg:
+  ui-modules:

@@ -1,14 +1,17 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
+const api = process.env.VITE_API_PROXY || "http://127.0.0.1:8787";
+const ws = api.replace(/^http/, "ws");
+
 export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173,
     proxy: {
-      "/api": "http://127.0.0.1:8787",
-      "/ws": { target: "ws://127.0.0.1:8787", ws: true },
-      "/corebank": "http://127.0.0.1:8787",
+      "/api": api,
+      "/ws": { target: ws, ws: true },
+      "/corebank": api,
     },
   },
 });

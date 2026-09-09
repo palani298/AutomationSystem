@@ -1,5 +1,6 @@
 # TODO
 
+- Headed Playwright in Docker (operator handoff). Compose runs headless; demo stays on the host.
 - Cross-tenant canary replays and per-tenant locator overrides.
 - Desktop accessibility adapter (schema already has `surface.kind`).
 - One-step, allowlisted LLM fallback on a failed replay step.

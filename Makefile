@@ -1,4 +1,4 @@
-.PHONY: install browsers temporal api worker ui discover replay test mcp
+.PHONY: install browsers temporal api worker ui discover replay test mcp stop
 
 install:
 	python3 -m venv .venv
@@ -34,3 +34,9 @@ mcp:
 
 test:
 	.venv/bin/pytest -q
+
+stop:
+	@-lsof -nP -tiTCP:8787,5173 -sTCP:LISTEN | xargs kill 2>/dev/null || true
+	@-pkill -f "temporal server start-dev" 2>/dev/null || true
+	@-pkill -f "capability-forge api" 2>/dev/null || true
+	@echo "Stopped API (:8787), Vite (:5173), and Temporal if they were running."

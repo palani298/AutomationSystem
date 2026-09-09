@@ -8,6 +8,8 @@ This is a capability-creation system, not a QA tool.
 
 ## Demo (the required path)
 
+**Interview walkthrough (run each process yourself):** see [`DEMO.md`](DEMO.md). That file is the step list: start order, what to type, what to click, how to stop.
+
 You need three terminals after install. Temporal is the orchestrator for UI-triggered runs; the CLI can also run discovery/replay in-process.
 
 ```bash
@@ -92,3 +94,14 @@ Without Temporal, CLI `discover` / `replay` still work (they use the engine dire
 pytest -q tests/test_safety.py tests/test_artifact.py
 pytest -q tests/test_replay_live.py   # needs Chromium; starts Corebank on :8799
 ```
+
+## Docker (optional)
+
+`Dockerfile` + `docker-compose.yml` package Temporal, the API/Playwright unit, and the admin UI. Use this to show “these processes can be copied,” not for the headed handoff demo.
+
+```bash
+docker compose up --build
+docker compose down
+```
+
+Manual host processes remain the real demo (`DEMO.md`).
