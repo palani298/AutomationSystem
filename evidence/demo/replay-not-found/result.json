@@ -1,0 +1,12 @@
+{
+  "kind": "business_outcome",
+  "artifact_id": "lookup-member-balance-ref",
+  "run_id": "ef5de8ea-bc04-4b66-b051-2747eca149b9",
+  "outputs": {},
+  "business_code": "MEMBER_NOT_FOUND",
+  "business_message": "No member file exists for the supplied member number",
+  "failed_step_id": null,
+  "expected": null,
+  "observed": "No records found",
+  "evidence_dir": "evidence/replay-ef5de8ea-bc04-4b66-b051-2747eca149b9"
+}

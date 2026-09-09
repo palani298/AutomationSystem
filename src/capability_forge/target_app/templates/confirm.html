@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block main %}
+<p role="status">Balance inquiry has been written to the member journal.</p>
+<table class="grid" style="width:420px;">
+  <tr><th>Field</th><th>Value</th></tr>
+  <tr><td>Confirmation</td><td><span aria-label="Inquiry confirmation">{{ confirmation }}</span></td></tr>
+  <tr><td>Member</td><td>{{ member.member_id }}</td></tr>
+  <tr><td>Savings available</td><td><span aria-label="Savings balance">{{ member.savings_balance }}</span></td></tr>
+</table>
+<p><a href="/corebank/">New search</a></p>
+{% endblock %}

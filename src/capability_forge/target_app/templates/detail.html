@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block main %}
+<h2 style="font-size:14px;margin-top:0;">Member file — {{ member.member_id }}</h2>
+{% if member.status == "restricted" %}
+  <p class="err" role="status">{{ member.restriction }}</p>
+{% endif %}
+<table class="layout">
+  <tr>
+    <td style="width:55%;vertical-align:top;">
+      <table class="grid">
+        <tr><th colspan="2">Profile</th></tr>
+        <tr><td>Name</td><td>{{ member.name }}</td></tr>
+        <tr><td>Status</td><td>{{ member.status }}</td></tr>
+        <tr><td>Home branch</td><td>{{ member.branch }}</td></tr>
+      </table>
+    </td>
+    <td style="width:45%;vertical-align:top;">
+      <table class="grid">
+        <tr><th>Share</th><th>Number</th><th>Available</th></tr>
+        <tr>
+          <td>Savings</td>
+          <td>{{ member.savings_mask }}</td>
+          <td><span aria-label="Savings balance">{{ member.savings_balance }}</span></td>
+        </tr>
+        <tr>
+          <td>Checking</td>
+          <td>{{ member.checking_mask }}</td>
+          <td><span aria-label="Checking balance">{{ member.checking_balance }}</span></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<p>
+  <a class="btn" href="/corebank/member/{{ member.member_id }}/inquiry" role="button">Record balance inquiry</a>
+  {% if member.status != "restricted" %}
+  <a class="btn" href="/corebank/member/{{ member.member_id }}/close-account" role="button">Close account</a>
+  {% endif %}
+</p>
+{% endblock %}

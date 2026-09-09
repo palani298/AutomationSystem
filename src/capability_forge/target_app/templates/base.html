@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{{ title }} — CU Core Servicing 7.2</title>
+  <link rel="stylesheet" href="/corebank/static/corebank.css">
+</head>
+<body>
+<div id="shell">
+  <div id="banner">
+    <h1>Westlake Credit Union</h1>
+    <div class="sub">Core Servicing Workbench 7.2 &nbsp;|&nbsp; Branch 014 &nbsp;|&nbsp; Operator: TELLER01</div>
+  </div>
+  <div id="crumb">Servicing &gt; Member File &gt; {{ crumb }}</div>
+  <div id="main">{% block main %}{% endblock %}</div>
+  <div id="footer">Internal use only. Do not share member data outside the branch.</div>
+</div>
+</body>
+</html>

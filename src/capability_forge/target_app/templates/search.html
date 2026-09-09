@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block main %}
+{% if notice %}
+  <div class="notice" role="alertdialog" aria-label="System notice">
+    <b>System notice:</b> Overnight batch in progress. Click
+    <button class="btn" onclick="this.parentElement.remove()">Acknowledge</button>
+    to continue.
+  </div>
+{% endif %}
+<p>Enter a member number and press Search. Partial names are not supported in this release.</p>
+<iframe class="search-frame" title="Member search form" src="/corebank/search-form"></iframe>
+<p class="hint">Hint for operators: member 12345 is the training record.</p>
+{% endblock %}

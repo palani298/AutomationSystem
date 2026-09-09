@@ -1,0 +1,300 @@
+{
+  "schema_version": "1.0.0",
+  "id": "lookup-member-balance-ref",
+  "name": "Lookup member savings balance",
+  "description": "look up member {member_id} and read their current savings balance",
+  "version": 1,
+  "status": "approved",
+  "surface": {
+    "kind": "web",
+    "entry_url": "http://127.0.0.1:8787/corebank/",
+    "vendor_app": "corebank",
+    "vendor_version": "1.0"
+  },
+  "inputs": [
+    {
+      "name": "member_id",
+      "type": "string",
+      "required": true,
+      "description": "Member number"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "savings_balance",
+      "type": "string",
+      "required": false,
+      "description": ""
+    },
+    {
+      "name": "confirmation_id",
+      "type": "string",
+      "required": false,
+      "description": ""
+    }
+  ],
+  "steps": [
+    {
+      "id": "s01",
+      "action": "navigate",
+      "description": "Open servicing search",
+      "locators": [],
+      "value_from": null,
+      "literal": null,
+      "extract_as": null,
+      "url": "http://127.0.0.1:8787/corebank/",
+      "risk": "safe",
+      "wait_ms": null
+    },
+    {
+      "id": "s02",
+      "action": "fill",
+      "description": "Enter member number",
+      "locators": [
+        {
+          "strategy": "label",
+          "role": null,
+          "name": null,
+          "label": "Member number",
+          "text": null,
+          "placeholder": null,
+          "title": null,
+          "css": null,
+          "exact": false,
+          "frame_selector": "iframe[title=\"Member search form\"]",
+          "nth": null
+        },
+        {
+          "strategy": "role_name",
+          "role": "textbox",
+          "name": "Member number",
+          "label": null,
+          "text": null,
+          "placeholder": null,
+          "title": null,
+          "css": null,
+          "exact": false,
+          "frame_selector": "iframe[title=\"Member search form\"]",
+          "nth": null
+        }
+      ],
+      "value_from": "params.member_id",
+      "literal": null,
+      "extract_as": null,
+      "url": null,
+      "risk": "safe",
+      "wait_ms": null
+    },
+    {
+      "id": "s03",
+      "action": "click",
+      "description": "Search",
+      "locators": [
+        {
+          "strategy": "role_name",
+          "role": "button",
+          "name": "Search",
+          "label": null,
+          "text": null,
+          "placeholder": null,
+          "title": null,
+          "css": null,
+          "exact": false,
+          "frame_selector": "iframe[title=\"Member search form\"]",
+          "nth": null
+        }
+      ],
+      "value_from": null,
+      "literal": null,
+      "extract_as": null,
+      "url": null,
+      "risk": "safe",
+      "wait_ms": null
+    },
+    {
+      "id": "s04",
+      "action": "click",
+      "description": "Open member file",
+      "locators": [
+        {
+          "strategy": "role_name",
+          "role": "link",
+          "name": "Open file",
+          "label": null,
+          "text": null,
+          "placeholder": null,
+          "title": null,
+          "css": null,
+          "exact": false,
+          "frame_selector": null,
+          "nth": null
+        },
+        {
+          "strategy": "text",
+          "role": null,
+          "name": null,
+          "label": null,
+          "text": "Open file",
+          "placeholder": null,
+          "title": null,
+          "css": null,
+          "exact": false,
+          "frame_selector": null,
+          "nth": null
+        }
+      ],
+      "value_from": null,
+      "literal": null,
+      "extract_as": null,
+      "url": null,
+      "risk": "safe",
+      "wait_ms": null
+    },
+    {
+      "id": "s05",
+      "action": "extract",
+      "description": "Read savings available",
+      "locators": [
+        {
+          "strategy": "role_name",
+          "role": "generic",
+          "name": "Savings balance",
+          "label": null,
+          "text": null,
+          "placeholder": null,
+          "title": null,
+          "css": null,
+          "exact": false,
+          "frame_selector": null,
+          "nth": null
+        },
+        {
+          "strategy": "css",
+          "role": null,
+          "name": null,
+          "label": null,
+          "text": null,
+          "placeholder": null,
+          "title": null,
+          "css": "[aria-label=\"Savings balance\"]",
+          "exact": false,
+          "frame_selector": null,
+          "nth": null
+        }
+      ],
+      "value_from": null,
+      "literal": null,
+      "extract_as": "savings_balance",
+      "url": null,
+      "risk": "safe",
+      "wait_ms": null
+    },
+    {
+      "id": "s06",
+      "action": "click",
+      "description": "Record inquiry",
+      "locators": [
+        {
+          "strategy": "role_name",
+          "role": "button",
+          "name": "Record balance inquiry",
+          "label": null,
+          "text": null,
+          "placeholder": null,
+          "title": null,
+          "css": null,
+          "exact": false,
+          "frame_selector": null,
+          "nth": null
+        },
+        {
+          "strategy": "text",
+          "role": null,
+          "name": null,
+          "label": null,
+          "text": "Record balance inquiry",
+          "placeholder": null,
+          "title": null,
+          "css": null,
+          "exact": false,
+          "frame_selector": null,
+          "nth": null
+        }
+      ],
+      "value_from": null,
+      "literal": null,
+      "extract_as": null,
+      "url": null,
+      "risk": "safe",
+      "wait_ms": null
+    },
+    {
+      "id": "s07",
+      "action": "extract",
+      "description": "Read confirmation",
+      "locators": [
+        {
+          "strategy": "css",
+          "role": null,
+          "name": null,
+          "label": null,
+          "text": null,
+          "placeholder": null,
+          "title": null,
+          "css": "[aria-label=\"Inquiry confirmation\"]",
+          "exact": false,
+          "frame_selector": null,
+          "nth": null
+        }
+      ],
+      "value_from": null,
+      "literal": null,
+      "extract_as": "confirmation_id",
+      "url": null,
+      "risk": "safe",
+      "wait_ms": null
+    }
+  ],
+  "checkpoint": {
+    "description": "Inquiry confirmation page is showing",
+    "all_of": [
+      {
+        "kind": "visible_text",
+        "pattern": "Balance inquiry has been written",
+        "locator": null,
+        "extract_name": null
+      },
+      {
+        "kind": "extract_present",
+        "pattern": null,
+        "locator": null,
+        "extract_name": "savings_balance"
+      }
+    ]
+  },
+  "business_outcomes": [
+    {
+      "code": "MEMBER_NOT_FOUND",
+      "message": "No member file exists for the supplied member number",
+      "detect": {
+        "kind": "visible_text",
+        "pattern": "No records found",
+        "locator": null,
+        "extract_name": null
+      }
+    },
+    {
+      "code": "ACCOUNT_RESTRICTED",
+      "message": "Member file is on a servicing hold",
+      "detect": {
+        "kind": "visible_text",
+        "pattern": "Servicing hold",
+        "locator": null,
+        "extract_name": null
+      }
+    }
+  ],
+  "tenant_overrides": {},
+  "created_from_run_id": "seed",
+  "created_at": "2026-09-09T00:12:57.144743+00:00"
+}

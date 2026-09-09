@@ -1,0 +1,15 @@
+{
+  "kind": "success",
+  "artifact_id": "lookup-member-balance-ref",
+  "run_id": "36281ee7-baa6-47c7-8d1d-f497bf13487f",
+  "outputs": {
+    "savings_balance": "[REDACTED]",
+    "confirmation_id": "[REDACTED]"
+  },
+  "business_code": null,
+  "business_message": null,
+  "failed_step_id": null,
+  "expected": null,
+  "observed": null,
+  "evidence_dir": "evidence/replay-36281ee7-baa6-47c7-8d1d-f497bf13487f"
+}

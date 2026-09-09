@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block main %}
+{% if not member %}
+  <p class="err" role="status">No records found for member number {{ memno }}.</p>
+  <p><a href="/corebank/">Return to search</a></p>
+{% else %}
+  <p>Search results (1 row).</p>
+  <table class="grid">
+    <tr>
+      <th>Member #</th>
+      <th>Name</th>
+      <th>Branch</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+    <tr>
+      <td>{{ member.member_id }}</td>
+      <td>{{ member.name }}</td>
+      <td>{{ member.branch }}</td>
+      <td>{{ member.status }}</td>
+      <td><a href="/corebank/member/{{ member.member_id }}">Open file</a></td>
+    </tr>
+  </table>
+{% endif %}
+{% endblock %}
