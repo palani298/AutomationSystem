@@ -56,6 +56,7 @@ class Registry:
                 )
             await db.commit()
         await self._backfill_slugs()
+        await self._migrate_legacy_seed_id()
 
     async def _backfill_slugs(self) -> None:
         async with aiosqlite.connect(self.path) as db:
@@ -67,6 +68,22 @@ class Registry:
             if artifact.slug != slug or row["slug"] != slug:
                 artifact.slug = slug
                 await self.upsert_artifact(artifact)
+
+    async def _migrate_legacy_seed_id(self) -> None:
+        """Older DBs used lookup-member-balance-ref; DEMO.md uses …-v1."""
+        from capability_forge.recording.compile import artifact_id
+
+        old = await self.get_artifact("lookup-member-balance-ref")
+        new_id = artifact_id(CAPABILITY_SLUG, 1)
+        if not old or await self.get_artifact(new_id):
+            return
+        old.id = new_id
+        old.slug = CAPABILITY_SLUG
+        old.version = 1
+        await self.upsert_artifact(old)
+        async with aiosqlite.connect(self.path) as db:
+            await db.execute("DELETE FROM artifacts WHERE id=?", ("lookup-member-balance-ref",))
+            await db.commit()
 
     async def upsert_artifact(self, artifact: Artifact) -> None:
         if not artifact.slug:
@@ -103,10 +120,17 @@ class Registry:
             return Artifact.model_validate_json(row["body"]) if row else None
 
     async def resolve(self, ref: str) -> Artifact | None:
-        """Exact row id, else latest approved for this slug, else latest any version."""
+        """Exact row id, `{slug}-v{n}`, slug (latest approved), or latest any version."""
         found = await self.get_artifact(ref)
         if found:
             return found
+        if "-v" in ref:
+            slug, _, suffix = ref.rpartition("-v")
+            if slug and suffix.isdigit():
+                version = int(suffix)
+                for artifact in await self.versions_of(slug):
+                    if artifact.version == version:
+                        return artifact
         return await self.latest_approved(ref) or await self.latest_for_slug(ref)
 
     async def latest_artifact(self) -> Artifact | None:

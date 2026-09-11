@@ -61,3 +61,15 @@ async def test_catalog_lists_drafts_separately_from_live(reg: Registry):
     assert catalog[0]["pending_count"] == 1
     drafts = await reg.pending_drafts()
     assert drafts[0].version == 2
+
+
+@pytest.mark.asyncio
+async def test_resolve_accepts_slug_version_and_legacy_ref(reg: Registry):
+    v1 = seed_reference_artifact()
+    v1.id = "lookup-member-balance-ref"
+    await reg.upsert_artifact(v1)
+    await reg.init()
+    found = await reg.resolve("lookup-member-balance-v1")
+    assert found is not None
+    assert found.version == 1
+    assert found.slug == CAPABILITY_SLUG
