@@ -79,4 +79,4 @@ Composition (search-by-name → pick a row → fetch details) is the calling age
 - Local-model computer-use on DGX Spark was not used. One frontier-API discovery run is the intended evidence.
 - Code generation of page objects was skipped; the artifact *is* the reusable program.
 
-Next: cross-tenant canary replays, a desktop accessibility adapter, and a one-step assisted fallback behind the same guard.
+Next: see `TODO.md` (local Spark/OpenClaw as discovery client or MCP caller, one-step replay fallback, desktop adapter, tenant canaries, headed Docker handoff).
